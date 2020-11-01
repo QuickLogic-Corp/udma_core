@@ -144,6 +144,7 @@ module udma_rx_channels
     logic                  [L2_AWIDTH_NOAL-1:0] s_l2_addr;
     logic       [L2_AWIDTH_NOAL-ALIGN_BITS-1:0] s_l2_addr_na;
     logic                 [STREAM_ID_WIDTH-1:0] s_l2_stream_id;
+    logic                                       s_l2_is_stream;
     logic                                 [1:0] s_l2_bytes;
 
     logic                 [INTFIFO_L2_SIZE-1:0] s_fifoin;
@@ -151,6 +152,7 @@ module udma_rx_channels
 
     logic             [INTFIFO_FILTER_SIZE-1:0] s_fifoin_stream;
     logic             [INTFIFO_FILTER_SIZE-1:0] s_fifoout_stream;
+    logic                                       s_stream_valid;
 
     logic                                       s_sample_indata;
     logic                                       s_sample_indata_l2;
@@ -159,17 +161,20 @@ module udma_rx_channels
     logic            [N_LIN_CHANNELS-1:0] [1:0] s_stream_cfg;
     logic                                       s_is_stream;
     logic                                       s_stream_use_buff;
-    logic                  [STREAM_ID_WIDTH-1:0] s_stream_id;
+    logic                 [STREAM_ID_WIDTH-1:0] s_stream_id;
 
     logic                       [N_STREAMS-1:0] s_stream_ready;
     logic                      [DATA_WIDTH-1:0] s_stream_data;
-    logic                  [STREAM_ID_WIDTH-1:0] s_stream_dest;
+    logic                 [STREAM_ID_WIDTH-1:0] s_stream_dest;
     logic                                 [1:0] s_stream_size;
     logic                                       s_stream_sot;
     logic                                       s_stream_eot;
     logic                                       s_stream_ready_demux;
 
     logic                                       s_stream_storel2;
+    logic                                       s_stream_direct;
+    logic                                       s_target_l2;
+    logic                                       s_target_stream;
 
     logic                  [N_LIN_CHANNELS-1:0] s_ch_events;
     logic                  [N_LIN_CHANNELS-1:0] s_ch_sot;
@@ -181,6 +186,7 @@ module udma_rx_channels
     logic                                       s_push_filter;
 
     logic                                       s_l2_req;
+    logic                                       s_l2_req_stream;
     logic                                       s_l2_gnt;
 
     logic                                       s_is_na;
