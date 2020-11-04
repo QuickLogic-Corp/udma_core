@@ -1,6 +1,7 @@
 udma_core:
   incdirs: [
-        ./rtl,
+        rtl/common,
+        rtl/core,
   ]        
   files: [
     rtl/core/udma_ch_addrgen.sv,
